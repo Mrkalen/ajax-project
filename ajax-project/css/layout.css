@@ -6,9 +6,18 @@ h1 {
   margin: 0;
 }
 
-.hp-image {
-  width: 100%;
+p {
+  margin: 0;
+}
+
+.home-page {
   margin: 5rem 0;
+  padding: 0.5rem;
+}
+
+.hp-image {
+  border-radius: 5px;
+  width: 100%;
 }
 
 footer {
@@ -27,9 +36,6 @@ footer {
   padding: 0;
   margin: 0;
   font: initial;
-}
-
-.save {
   font-size: 2rem;
 }
 
@@ -44,5 +50,5 @@ footer {
 }
 
 .food-beer {
-  font: initial;
+  font-size: 1.75rem;
 }
