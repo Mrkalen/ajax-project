@@ -41,6 +41,10 @@ function getTacoRecipe() {
 
 // Recipe cycler
 
+window.addEventListener('load', function () {
+  getTacoRecipe();
+});
+
 var $recipe = document.querySelector('.window');
 
 document.addEventListener('click', function () {
