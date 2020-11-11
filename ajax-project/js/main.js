@@ -1,13 +1,12 @@
 // taco API
-
+var recipe = {};
 function getTacoRecipe() {
   var tacoApi = new XMLHttpRequest();
   tacoApi.open('GET', 'http://taco-randomizer.herokuapp.com/random/');
   tacoApi.responseType = 'json';
   tacoApi.addEventListener('load', function () {
     recipeRender(tacoApi.response);
-    var tacoData = tacoApi.response;
-    return tacoData;
+    recipe = tacoApi.response;
   });
   tacoApi.send();
 }
@@ -42,7 +41,6 @@ function getTacoRecipe() {
 
 // Recipe cycler
 
-var $recipeWindow = document.querySelector('.recipe-window');
 var $recipe = document.querySelector('.window');
 
 document.addEventListener('click', function () {
@@ -53,7 +51,7 @@ document.addEventListener('click', function () {
     // getBeerData();
   }
   if (event.target.getAttribute('id') === 'save-recipe') {
-    var tacoData = tacoApi.response;
+    saveTaco();
   }
 });
 
@@ -65,7 +63,6 @@ function recipeRender(recipe) {
   var mixinName = recipe.mixin.name;
   var condimentName = recipe.condiment.name;
   var shellName = recipe.shell.name;
-  var seasoningName = recipe.seasoning.name;
   var tacoName = baseName + ' with ' + mixinName + ' and a ' + condimentName + ' in ' + shellName + '.';
 
   var recipeName = document.createElement('h2');
@@ -133,13 +130,10 @@ function recipeRender(recipe) {
 }
 
 // save taco data
-
-function saveTaco(recipe) {
-  console.log(recipe);
+function saveTaco() {
   var tacoName = recipe.base_layer.name;
   var tacoData = recipe;
-  data.savedRecipes.tacoName = tacoName;
-  data.savedRecipes.tacoName.tacoData = tacoData;
+  data.savedRecipes.push({ name: tacoName, data: tacoData });
 }
 
 // function beerRender(beer) {
