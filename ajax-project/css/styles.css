@@ -1,0 +1,23 @@
+body {
+  font-family: 'Gloria Hallelujah', cursive;
+  background-color: #dcdcdc;
+}
+
+header {
+  text-align: center;
+  background-color: #129afd;
+  font-size: 0.75rem;
+}
+
+.navigation {
+  background-color: #c5ac55;
+  border-style: none;
+}
+
+.navigation:focus {
+  background-color: khaki;
+}
+
+.redo {
+  color: #7912fd;
+}
