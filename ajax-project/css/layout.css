@@ -31,7 +31,7 @@ footer {
 }
 
 .navigation {
-  width: 25%;
+  width: 100%;
   height: 100%;
   padding: 0;
   margin: 0;
@@ -51,4 +51,29 @@ footer {
 
 .food-beer {
   font-size: 1.75rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.recipe-window {
+  display: flex;
+  flex-direction: column;
+}
+
+.window-header {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.window {
+  max-width: 100vw;
+  min-height: 77vh;
+  background-color: white;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  padding: 0 1rem;
 }
