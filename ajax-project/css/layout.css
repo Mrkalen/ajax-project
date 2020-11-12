@@ -53,10 +53,6 @@ footer {
   font-size: 1.75rem;
 }
 
-.hidden {
-  display: none;
-}
-
 .recipe-window {
   display: flex;
   flex-direction: column;
@@ -70,6 +66,8 @@ footer {
 }
 
 .window {
+  display: flex;
+  flex-direction: column;
   overflow: scroll;
   max-width: 100vw;
   min-height: 77vh;
@@ -78,4 +76,15 @@ footer {
   margin-right: 1rem;
   margin-left: 1rem;
   padding: 0 1rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.beer-img {
+  width: 100%;
+  height: 15rem;
+  align-self: center;
+  object-fit: contain;
 }
