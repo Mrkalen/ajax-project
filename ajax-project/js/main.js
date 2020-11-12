@@ -185,8 +185,12 @@ function beerRender(beer) {
 
   var beerPicture = document.createElement('img');
   beerPicture.setAttribute('class', 'beer-img');
-  beerPicture.setAttribute('src', beerImg);
-  beerPicture.setAttribute('alt', 'No Image Available');
+  if (beerImg !== null) {
+    beerPicture.setAttribute('src', beerImg);
+  } else {
+
+    beerPicture.setAttribute('src', 'images/404 beer not found.png');
+  }
   $beerWindow.appendChild(beerPicture);
 
   var beerAlcohol = document.createElement('p');
