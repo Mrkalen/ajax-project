@@ -197,5 +197,5 @@ function beerRender(beer) {
 function saveBeer() {
   var beerName = beer[0].name;
   var beerData = beer;
-  data.savedRecipes.push({ name: beerName, data: beerData });
+  data.savedBeers.push({ name: beerName, data: beerData });
 }
