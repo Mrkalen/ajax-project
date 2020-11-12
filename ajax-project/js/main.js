@@ -1,3 +1,5 @@
+var isLoading = false;
+
 // taco API
 var recipe = {};
 function getTacoRecipe() {
@@ -5,8 +7,10 @@ function getTacoRecipe() {
   tacoApi.open('GET', 'http://taco-randomizer.herokuapp.com/random/');
   tacoApi.responseType = 'json';
   tacoApi.addEventListener('load', function () {
+
     recipeRender(tacoApi.response);
     recipe = tacoApi.response;
+    isLoading = false;
   });
   tacoApi.send();
 }
@@ -51,10 +55,12 @@ document.addEventListener('click', function () {
   // debugger;
 
   if (event.target.getAttribute('id') === 'cycle-recipe') {
+    isLoading = true;
     getTacoRecipe();
     // getBeerData();
   }
   if (event.target.getAttribute('id') === 'save-recipe') {
+    if (isLoading) return;
     saveTaco();
   }
 });
