@@ -1,6 +1,7 @@
 var isLoading = false;
 
 // taco API
+
 var recipe = {};
 function getTacoRecipe() {
   var tacoApi = new XMLHttpRequest();
@@ -24,6 +25,7 @@ function getTacoRecipe() {
 // tacoApi.send();
 
 // beer API
+
 var beer = {};
 function getBeerData() {
   var beerApi = new XMLHttpRequest();
@@ -45,6 +47,7 @@ function getBeerData() {
 // beerApi.send();
 
 // Recipe cycler
+
 var $recipeWindow = document.querySelector('.recipe-window');
 
 window.addEventListener('load', function () {
@@ -59,8 +62,6 @@ window.addEventListener('load', function () {
 var $recipe = document.querySelector('#recipe-window');
 
 document.addEventListener('click', function () {
-  // debugger;
-
   if (event.target.getAttribute('id') === 'cycle-recipe') {
     isLoading = true;
     getTacoRecipe();
@@ -78,6 +79,8 @@ document.addEventListener('click', function () {
     saveBeer();
   }
 });
+
+// Recipe Render
 
 function recipeRender(recipe) {
   while ($recipe.firstChild) {
@@ -154,11 +157,14 @@ function recipeRender(recipe) {
 }
 
 // save taco data
+
 function saveTaco() {
   var tacoName = recipe.base_layer.name;
   var tacoData = recipe;
   data.savedRecipes.push({ name: tacoName, data: tacoData });
 }
+
+// Beer Render
 
 var $beerWindow = document.querySelector('#beer-window');
 
@@ -194,8 +200,22 @@ function beerRender(beer) {
   return drinkName;
 }
 
+// Save Beer
+
 function saveBeer() {
   var beerName = beer[0].name;
   var beerData = beer;
   data.savedBeers.push({ name: beerName, data: beerData });
 }
+
+// Local Storage
+
+var savedData = localStorage.getItem('saved-tacos-and-beer');
+if (savedData !== null) {
+  data = JSON.parse(savedData);
+}
+
+window.addEventListener('beforeunload', function () {
+  var dataJson = JSON.stringify(data);
+  localStorage.setItem('saved-tacos-and-beer', dataJson);
+});
