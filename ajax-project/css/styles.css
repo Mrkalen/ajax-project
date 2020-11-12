@@ -21,3 +21,31 @@ header {
 .redo {
   color: #7912fd;
 }
+
+.hp-image {
+  border-radius: 5px;
+}
+
+.window {
+  border-radius: 5px;
+}
+
+.recipe-buttons {
+  font-size: 1.25rem;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+}
+
+.recipe-header {
+  font-size: 1.25rem;
+}
+
+.title {
+  font-size: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+p.directions {
+  font-size: .75rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
