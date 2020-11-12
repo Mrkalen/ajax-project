@@ -53,10 +53,6 @@ footer {
   font-size: 1.75rem;
 }
 
-.hidden {
-  display: none;
-}
-
 .recipe-window {
   display: flex;
   flex-direction: column;
@@ -78,4 +74,12 @@ footer {
   margin-right: 1rem;
   margin-left: 1rem;
   padding: 0 1rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.beer-img {
+  width: 50%;
 }

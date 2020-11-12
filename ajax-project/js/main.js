@@ -7,7 +7,6 @@ function getTacoRecipe() {
   tacoApi.open('GET', 'http://taco-randomizer.herokuapp.com/random/');
   tacoApi.responseType = 'json';
   tacoApi.addEventListener('load', function () {
-
     recipeRender(tacoApi.response);
     recipe = tacoApi.response;
     isLoading = false;
@@ -25,16 +24,18 @@ function getTacoRecipe() {
 // tacoApi.send();
 
 // beer API
-
-// function getBeerData() {
-//   var beerApi = new XMLHttpRequest();
-//   beerApi.open('GET', 'https://api.punkapi.com/v2/beers/random');
-//   beerApi.responseType = 'json';
-//   beerApi.addEventListener('load', function () {
-//     beerRender(beerApi.response);
-//   });
-//   beerApi.send();
-// }
+var beer = {};
+function getBeerData() {
+  var beerApi = new XMLHttpRequest();
+  beerApi.open('GET', 'https://api.punkapi.com/v2/beers/random');
+  beerApi.responseType = 'json';
+  beerApi.addEventListener('load', function () {
+    beerRender(beerApi.response);
+    beer = beerApi.response;
+    isLoading = false;
+  });
+  beerApi.send();
+}
 
 // var beerApi = new XMLHttpRequest();
 // beerApi.open('GET', 'https://api.punkapi.com/v2/beers/random');
@@ -44,12 +45,18 @@ function getTacoRecipe() {
 // beerApi.send();
 
 // Recipe cycler
+var $recipeWindow = document.querySelector('.recipe-window');
 
 window.addEventListener('load', function () {
-  getTacoRecipe();
+  if ($recipeWindow.getAttribute('class') !== 'recipe-window hidden') {
+    getTacoRecipe();
+  }
+  if ($beerWindow.getAttribute('class') !== 'beer-window hidden') {
+    getBeerData();
+  }
 });
 
-var $recipe = document.querySelector('.window');
+var $recipe = document.querySelector('#recipe-window');
 
 document.addEventListener('click', function () {
   // debugger;
@@ -57,11 +64,18 @@ document.addEventListener('click', function () {
   if (event.target.getAttribute('id') === 'cycle-recipe') {
     isLoading = true;
     getTacoRecipe();
-    // getBeerData();
   }
   if (event.target.getAttribute('id') === 'save-recipe') {
     if (isLoading) return;
     saveTaco();
+  }
+  if (event.target.getAttribute('id') === 'cycle-beer') {
+    isLoading = true;
+    getBeerData();
+  }
+  if (event.target.getAttribute('id') === 'save-beer') {
+    if (isLoading) return;
+    saveBeer();
   }
 });
 
@@ -146,7 +160,42 @@ function saveTaco() {
   data.savedRecipes.push({ name: tacoName, data: tacoData });
 }
 
-// function beerRender(beer) {
-//   console.log(beer);
-//   var beerName = beer.name;
-// }
+var $beerWindow = document.querySelector('#beer-window');
+
+function beerRender(beer) {
+  while ($beerWindow.firstChild) {
+    $beerWindow.removeChild($beerWindow.firstChild);
+  }
+
+  var beerName = beer[0].name;
+  var beerDescription = beer[0].description;
+  var beerAbv = beer[0].abv;
+  var beerImg = beer[0].image_url;
+
+  var drinkName = document.createElement('h2');
+  drinkName.setAttribute('class', 'beer-header');
+  drinkName.textContent = beerName;
+  $beerWindow.appendChild(drinkName);
+
+  var beerPicture = document.createElement('img');
+  beerPicture.setAttribute('class', 'beer-img');
+  beerPicture.setAttribute('src', beerImg);
+  beerPicture.setAttribute('alt', 'No Image Available');
+  $beerWindow.appendChild(beerPicture);
+
+  var beerAlcohol = document.createElement('p');
+  beerAlcohol.textContent = 'ABV: ' + beerAbv;
+  $beerWindow.appendChild(beerAlcohol);
+
+  var beerTalk = document.createElement('p');
+  beerTalk.textContent = 'Description: ' + beerDescription;
+  $beerWindow.appendChild(beerTalk);
+
+  return drinkName;
+}
+
+function saveBeer() {
+  var beerName = beer[0].name;
+  var beerData = beer;
+  data.savedRecipes.push({ name: beerName, data: beerData });
+}
