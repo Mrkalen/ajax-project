@@ -78,6 +78,10 @@ document.addEventListener('click', function () {
     if (isLoading) return;
     saveBeer();
   }
+  if (event.target.getAttribute('id') === 'save-recipe' || event.target.getAttribute('id') === 'save-beer') {
+    var dataJson = JSON.stringify(data);
+    localStorage.setItem('saved-tacos-and-beer', dataJson);
+  }
 });
 
 // Recipe Render
@@ -219,7 +223,7 @@ if (savedData !== null) {
   data = JSON.parse(savedData);
 }
 
-window.addEventListener('beforeunload', function () {
-  var dataJson = JSON.stringify(data);
-  localStorage.setItem('saved-tacos-and-beer', dataJson);
-});
+// window.addEventListener('beforeunload', function () {
+//   var dataJson = JSON.stringify(data);
+//   localStorage.setItem('saved-tacos-and-beer', dataJson);
+// });
