@@ -1,5 +1,4 @@
 var isLoading = false;
-
 // taco API
 
 var recipe = {};
@@ -9,6 +8,7 @@ function getTacoRecipe() {
   tacoApi.responseType = 'json';
   tacoApi.addEventListener('load', function () {
     recipeRender(tacoApi.response);
+    comboRecipeRender(tacoApi.response);
     recipe = tacoApi.response;
     isLoading = false;
   });
@@ -33,6 +33,7 @@ function getBeerData() {
   beerApi.responseType = 'json';
   beerApi.addEventListener('load', function () {
     beerRender(beerApi.response);
+    comboBeerRender(beerApi.response);
     beer = beerApi.response;
     isLoading = false;
   });
@@ -49,6 +50,7 @@ function getBeerData() {
 // Recipe cycler
 
 var $recipeWindow = document.querySelector('.recipe-window');
+var $comboWindow = document.querySelector('.taco-and-beer-window');
 
 window.addEventListener('load', function () {
   if ($recipeWindow.getAttribute('class') !== 'recipe-window hidden') {
@@ -57,34 +59,55 @@ window.addEventListener('load', function () {
   if ($beerWindow.getAttribute('class') !== 'beer-window hidden') {
     getBeerData();
   }
+  if ($comboWindow.getAttribute('class') !== 'taco-and-beer-window hidden') { getTacoRecipe(); }
+  getBeerData();
 });
 
-var $recipe = document.querySelector('#recipe-window');
-
 document.addEventListener('click', function () {
-  if (event.target.getAttribute('id') === 'cycle-recipe') {
+
+  if (event.target.getAttribute('id') === 'cycle-recipe' || event.target.getAttribute('id') === 'cycle-combo-recipe') {
     isLoading = true;
     getTacoRecipe();
   }
-  if (event.target.getAttribute('id') === 'save-recipe') {
+  if (event.target.getAttribute('id') === 'save-recipe' || event.target.getAttribute('id') === 'save-combo-recipe') {
     if (isLoading) return;
     saveTaco();
   }
-  if (event.target.getAttribute('id') === 'cycle-beer') {
+  if (event.target.getAttribute('id') === 'cycle-beer' || event.target.getAttribute('id') === 'cycle-combo-beer') {
     isLoading = true;
     getBeerData();
   }
-  if (event.target.getAttribute('id') === 'save-beer') {
+  if (event.target.getAttribute('id') === 'save-beer' || event.target.getAttribute('id') === 'save-combo-beer') {
     if (isLoading) return;
     saveBeer();
   }
-  if (event.target.getAttribute('id') === 'save-recipe' || event.target.getAttribute('id') === 'save-beer') {
+
+  if (event.target.getAttribute('id') === 'save-recipe' || event.target.getAttribute('id') === 'save-beer' || event.target.getAttribute('id') === 'save-combo' || event.target.getAttribute('id') === 'save-combo-beer' || event.target.getAttribute('id') === 'save-combo-recipe') {
     var dataJson = JSON.stringify(data);
     localStorage.setItem('saved-tacos-and-beer', dataJson);
   }
 });
 
+var $saveCombo = document.querySelector('#save-combo');
+
+$saveCombo.addEventListener('click', function () {
+  if (isLoading) return;
+  saveCombo();
+  var dataJson = JSON.stringify(data);
+  localStorage.setItem('saved-tacos-and-beer', dataJson);
+});
+
+var $cycleCombo = document.querySelector('#cycle-combo');
+
+$cycleCombo.addEventListener('click', function () {
+  isLoading = true;
+  getBeerData();
+  getTacoRecipe();
+});
+
 // Recipe Render
+
+var $recipe = document.querySelector('#recipe-window');
 
 function recipeRender(recipe) {
   while ($recipe.firstChild) {
@@ -216,14 +239,145 @@ function saveBeer() {
   data.savedBeers.push({ name: beerName, data: beerData });
 }
 
+// combo recipe render
+
+var $comboRecipe = document.querySelector('#combo-recipe-window');
+
+function comboRecipeRender(recipe) {
+  while ($comboRecipe.firstChild) {
+    $comboRecipe.removeChild($comboRecipe.firstChild);
+  }
+  var baseName = recipe.base_layer.name;
+  var mixinName = recipe.mixin.name;
+  var condimentName = recipe.condiment.name;
+  var shellName = recipe.shell.name;
+  var tacoName = baseName + ' with ' + mixinName + ' and a ' + condimentName + ' in ' + shellName + '.';
+
+  var recipeName = document.createElement('h2');
+  recipeName.setAttribute('class', 'recipe-header');
+  recipeName.textContent = tacoName;
+  $comboRecipe.appendChild(recipeName);
+
+  var baseDiv = document.createElement('div');
+  baseDiv.setAttribute('class', 'recipe');
+  $comboRecipe.appendChild(baseDiv);
+
+  var baseTitle = document.createElement('h3');
+  baseTitle.setAttribute('class', 'title');
+  baseTitle.textContent = baseName + ' directions:';
+  baseDiv.appendChild(baseTitle);
+
+  var baseRecipe = document.createElement('p');
+  baseRecipe.setAttribute('class', 'directions');
+  baseRecipe.textContent = recipe.base_layer.recipe;
+  baseDiv.appendChild(baseRecipe);
+
+  var mixinDiv = document.createElement('div');
+  mixinDiv.setAttribute('class', 'recipe');
+  $comboRecipe.appendChild(mixinDiv);
+
+  var mixinTitle = document.createElement('h3');
+  mixinTitle.setAttribute('class', 'title');
+  mixinTitle.textContent = mixinName + ' directions:';
+  mixinDiv.appendChild(mixinTitle);
+
+  var mixinRecipe = document.createElement('p');
+  mixinRecipe.setAttribute('class', 'directions');
+  mixinRecipe.textContent = recipe.mixin.recipe;
+  mixinDiv.appendChild(mixinRecipe);
+
+  var condimentDiv = document.createElement('div');
+  condimentDiv.setAttribute('class', 'recipe');
+  $comboRecipe.appendChild(condimentDiv);
+
+  var condimentTitle = document.createElement('h3');
+  condimentTitle.setAttribute('class', 'title');
+  condimentTitle.textContent = condimentName + ' directions:';
+  condimentDiv.appendChild(condimentTitle);
+
+  var condimentRecipe = document.createElement('p');
+  condimentRecipe.setAttribute('class', 'directions');
+  condimentRecipe.textContent = recipe.condiment.recipe;
+  condimentDiv.appendChild(condimentRecipe);
+
+  var shellDiv = document.createElement('div');
+  shellDiv.setAttribute('class', 'recipe');
+  $comboRecipe.appendChild(shellDiv);
+
+  var shellTitle = document.createElement('h3');
+  shellTitle.setAttribute('class', 'title');
+  shellTitle.textContent = shellName + ' directions:';
+  shellDiv.appendChild(shellTitle);
+
+  var shellRecipe = document.createElement('p');
+  shellRecipe.setAttribute('class', 'directions');
+  shellRecipe.textContent = recipe.shell.recipe;
+  shellDiv.appendChild(shellRecipe);
+
+  return recipeName;
+}
+
+// combo beer render
+
+var $comboBeer = document.querySelector('#combo-beer-window');
+
+function comboBeerRender(beer) {
+  while ($comboBeer.firstChild) {
+    $comboBeer.removeChild($comboBeer.firstChild);
+  }
+
+  var beerName = beer[0].name;
+  var beerDescription = beer[0].description;
+  var beerAbv = beer[0].abv;
+  var beerImg = beer[0].image_url;
+
+  var beerDiv1 = document.createElement('div');
+  beerDiv1.setAttribute('class', 'beer-combo-row');
+  $comboBeer.appendChild(beerDiv1);
+
+  var drinkName = document.createElement('h2');
+  drinkName.setAttribute('class', 'beer-header');
+  drinkName.textContent = beerName;
+  beerDiv1.appendChild(drinkName);
+
+  var beerPicture = document.createElement('img');
+  beerPicture.setAttribute('class', 'beer-img');
+  if (beerImg !== null) {
+    beerPicture.setAttribute('src', beerImg);
+  } else {
+
+    beerPicture.setAttribute('src', 'images/404 beer not found.png');
+  }
+  beerDiv1.appendChild(beerPicture);
+
+  var beerDiv2 = document.createElement('div');
+  beerDiv2.setAttribute('class', 'beer-combo-row');
+  $comboBeer.appendChild(beerDiv2);
+
+  var beerAlcohol = document.createElement('p');
+  beerAlcohol.textContent = 'ABV: ' + beerAbv;
+  beerDiv2.appendChild(beerAlcohol);
+
+  var beerTalk = document.createElement('p');
+  beerTalk.textContent = 'Description: ' + beerDescription;
+  beerDiv2.appendChild(beerTalk);
+
+  return drinkName;
+}
+
+// save combo data
+
+function saveCombo() {
+  var beerName = beer[0].name;
+  var beerData = beer;
+  var tacoName = recipe.base_layer.name;
+  var tacoData = recipe;
+  data.savedCombos.push({ drinkName: beerName, drinkData: beerData, foodName: tacoName, foodData: tacoData });
+}
+
 // Local Storage
 
 var savedData = localStorage.getItem('saved-tacos-and-beer');
 if (savedData !== null) {
   data = JSON.parse(savedData);
 }
-
-// window.addEventListener('beforeunload', function () {
-//   var dataJson = JSON.stringify(data);
-//   localStorage.setItem('saved-tacos-and-beer', dataJson);
-// });
