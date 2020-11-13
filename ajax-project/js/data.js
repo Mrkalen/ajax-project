@@ -2,5 +2,5 @@
 var data = {
   savedRecipes: [],
   savedBeers: [],
-  savedCombos: {}
+  savedCombos: []
 };

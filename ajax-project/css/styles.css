@@ -49,3 +49,7 @@ p.directions {
   font-size: .75rem;
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.combo-window {
+  border-radius: 5px;
+}

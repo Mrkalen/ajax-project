@@ -83,8 +83,61 @@ footer {
 }
 
 .beer-img {
-  width: 100%;
+  width: 50%;
   height: 15rem;
   align-self: center;
   object-fit: contain;
+}
+
+.combo-window {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  max-width: 100vw;
+  min-height: 12rem;
+  max-height: 12rem;
+  background-color: white;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  padding: 0 1rem;
+}
+
+.beer-combo-row {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.beer-combo-row:nth-child(2) {
+  flex-direction: column;
+}
+
+.beer .beer-img {
+  height: 10rem;
+  object-fit: contain;
+}
+
+.combo-window.recipe {
+  text-align: left;
+  min-width: 14.5rem;
+  min-height: 14.5rem;
+}
+
+.taco-and-beer-window {
+  text-align: center;
+}
+
+/* .save-combo {
+  display: flex;
+  flex-direction: column;
+  padding-top: .5rem;
+} */
+
+.combo-footer {
+  padding-top: .5rem;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  line-height: 1rem;
 }
