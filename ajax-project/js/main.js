@@ -67,7 +67,6 @@ var $windowHeader = document.querySelector('.taco-and-beer-window');
 
 $windowHeader.addEventListener('click', function () {
   var id = event.target.id;
-  console.log(event.target);
   if (id === 'cycle-recipe' || id === 'cycle-combo-recipe') {
     isLoading = true;
     getTacoRecipe();
