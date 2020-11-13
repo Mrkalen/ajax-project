@@ -63,29 +63,27 @@ window.addEventListener('load', function () {
   getBeerData();
 });
 
-document.addEventListener('click', function () {
+var $windowHeader = document.querySelector('.taco-and-beer-window');
 
-  if (event.target.getAttribute('id') === 'cycle-recipe' || event.target.getAttribute('id') === 'cycle-combo-recipe') {
+$windowHeader.addEventListener('click', function () {
+  var id = event.target.id;
+  console.log(event.target);
+  if (id === 'cycle-recipe' || id === 'cycle-combo-recipe') {
     isLoading = true;
     getTacoRecipe();
-  }
-  if (event.target.getAttribute('id') === 'save-recipe' || event.target.getAttribute('id') === 'save-combo-recipe') {
+  } else if (id === 'save-recipe' || id === 'save-combo-recipe') {
     if (isLoading) return;
     saveTaco();
-  }
-  if (event.target.getAttribute('id') === 'cycle-beer' || event.target.getAttribute('id') === 'cycle-combo-beer') {
+    storeData();
+  } else if (id === 'cycle-beer' || id === 'cycle-combo-beer') {
     isLoading = true;
     getBeerData();
-  }
-  if (event.target.getAttribute('id') === 'save-beer' || event.target.getAttribute('id') === 'save-combo-beer') {
+  } else if (id === 'save-beer' || id === 'save-combo-beer') {
     if (isLoading) return;
     saveBeer();
+    storeData();
   }
 
-  if (event.target.getAttribute('id') === 'save-recipe' || event.target.getAttribute('id') === 'save-beer' || event.target.getAttribute('id') === 'save-combo' || event.target.getAttribute('id') === 'save-combo-beer' || event.target.getAttribute('id') === 'save-combo-recipe') {
-    var dataJson = JSON.stringify(data);
-    localStorage.setItem('saved-tacos-and-beer', dataJson);
-  }
 });
 
 var $saveCombo = document.querySelector('#save-combo');
@@ -93,8 +91,7 @@ var $saveCombo = document.querySelector('#save-combo');
 $saveCombo.addEventListener('click', function () {
   if (isLoading) return;
   saveCombo();
-  var dataJson = JSON.stringify(data);
-  localStorage.setItem('saved-tacos-and-beer', dataJson);
+  storeData();
 });
 
 var $cycleCombo = document.querySelector('#cycle-combo');
@@ -380,4 +377,9 @@ function saveCombo() {
 var savedData = localStorage.getItem('saved-tacos-and-beer');
 if (savedData !== null) {
   data = JSON.parse(savedData);
+}
+
+function storeData() {
+  var dataJson = JSON.stringify(data);
+  localStorage.setItem('saved-tacos-and-beer', dataJson);
 }
