@@ -72,6 +72,7 @@ window.addEventListener('load', function () {
 var $windowHeader = document.querySelector('.taco-and-beer-window');
 
 $windowHeader.addEventListener('click', function () {
+
   var id = event.target.id;
   if (id === 'cycle-recipe' || id === 'cycle-combo-recipe') {
     isLoading = true;
@@ -387,4 +388,116 @@ if (savedData !== null) {
 function storeData() {
   var dataJson = JSON.stringify(data);
   localStorage.setItem('saved-tacos-and-beer', dataJson);
+}
+
+var $savedWindow = document.querySelector('.saved-window');
+var $savedItemsView = document.querySelector('.saved-items-view');
+var $idRecipes = document.querySelector('#recipes');
+var $idBeers = document.querySelector('#beers');
+var $idCombos = document.querySelector('#combos');
+
+$idRecipes.addEventListener('click', function () {
+  $savedWindow.setAttribute('class', 'saved-window hidden');
+  $savedItemsView.setAttribute('class', 'saved-items-view');
+  var title = document.createElement('h2');
+  title.textContent = 'Recipes';
+
+  for (var i = 0; i < data.savedRecipes.length; i++) {
+    var pullRecipes = data.savedRecipes[i];
+    $savedItemsWindow.appendChild(savedRecipesRender(pullRecipes));
+  }
+  $savedItemsView.appendChild(title);
+});
+
+$idBeers.addEventListener('click', function () {
+  $savedWindow.setAttribute('class', 'saved-window hidden');
+  $savedItemsView.setAttribute('class', 'saved-items-view');
+  for (var i = 0; i < data.savedBeers.length; i++) {
+    var pullBeers = data.savedBeers[i];
+    $savedItemsWindow.appendChild(savedBeersRender(pullBeers));
+  }
+});
+
+$idCombos.addEventListener('click', function () {
+  $savedWindow.setAttribute('class', 'saved-window hidden');
+  $savedItemsView.setAttribute('class', 'saved-items-view');
+  for (var i = 0; i < data.savedCombos.length; i++) {
+    var pullCombos = data.savedCombos[i];
+    $savedItemsWindow.appendChild(savedCombosRender(pullCombos));
+  }
+});
+
+// saved items list
+
+var $savedItemsWindow = document.querySelector('.saved-items-window');
+
+function savedRecipesRender(recipe) {
+  // debugger;
+
+  var title = document.createElement('h1');
+  title.textContent = 'Recipe';
+
+  var div = document.createElement('div');
+  div.setAttribute('class', 'saved-item');
+
+  var recipeName = document.createElement('h2');
+  recipeName.textContent = recipe.name;
+  div.appendChild(recipeName);
+
+  return div;
+}
+
+function savedBeersRender(recipe) {
+
+  var div = document.createElement('div');
+  div.setAttribute('class', 'saved-item');
+
+  var div2 = document.createElement('div');
+  div2.setAttribute('class', 'beer-container');
+  div.appendChild(div2);
+
+  var beerName = document.createElement('h2');
+  beerName.textContent = recipe.name;
+  div2.appendChild(beerName);
+
+  var beerImg = document.createElement('img');
+  beerImg.setAttribute('class', 'beer-img');
+  if (recipe.data[0].image_url !== null) {
+    beerImg.setAttribute('src', recipe.data[0].image_url);
+  } else {
+    beerImg.setAttribute('src', 'images/404 beer not found.png');
+  }
+  div2.appendChild(beerImg);
+
+  return div;
+
+}
+
+function savedCombosRender(combos) {
+
+  var div = document.createElement('div');
+  div.setAttribute('class', 'saved-items');
+
+  var recipeName = document.createElement('h2');
+  recipeName.textContent = combos.foodName;
+  div.append(recipeName);
+
+  var div2 = document.createElement('div');
+  div2.setAttribute('class', 'beer-container');
+  div.appendChild(div2);
+
+  var beerName = document.createElement('h2');
+  beerName.textContent = combos.drinkName;
+  div2.appendChild(beerName);
+
+  var beerImg = document.createElement('img');
+  beerImg.setAttribute('class', 'combo-beer-img');
+  if (combos.drinkData[0].image_url !== null) {
+    beerImg.setAttribute('src', combos.drinkData[0].image_url);
+  } else {
+    beerImg.setAttribute('src', 'images/404 beer not found.png');
+  }
+  div2.appendChild(beerImg);
+
+  return div;
 }
