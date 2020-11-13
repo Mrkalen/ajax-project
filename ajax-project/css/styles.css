@@ -9,6 +9,12 @@ header {
   font-size: 0.75rem;
 }
 
+button {
+  font-family: 'Gloria Hallelujah', cursive;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+}
+
 .navigation {
   background-color: #c5ac55;
   border-style: none;

@@ -141,3 +141,14 @@ footer {
   flex-direction: row;
   line-height: 1rem;
 }
+
+.row {
+  text-align: center;
+}
+
+.saved-image {
+  width: 75%;
+  height: 9rem;
+  align-self: center;
+  object-fit: cover;
+}
