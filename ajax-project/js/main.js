@@ -1,3 +1,9 @@
+var data = {
+  savedRecipes: [],
+  savedBeers: [],
+  savedCombos: []
+};
+
 var isLoading = false;
 // taco API
 
