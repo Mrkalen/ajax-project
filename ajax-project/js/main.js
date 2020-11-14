@@ -446,7 +446,7 @@ $idRecipes.addEventListener('click', function () {
 
   for (var i = 0; i < data.savedRecipes.length; i++) {
     var pullRecipes = data.savedRecipes[i];
-    $savedItemsWindow.appendChild(savedRecipesRender(pullRecipes));
+    $savedItemsWindow.appendChild(savedRecipesRender(pullRecipes, i));
   }
 
 });
@@ -461,7 +461,7 @@ $idBeers.addEventListener('click', function () {
 
   for (var i = 0; i < data.savedBeers.length; i++) {
     var pullBeers = data.savedBeers[i];
-    $savedItemsWindow.appendChild(savedBeersRender(pullBeers));
+    $savedItemsWindow.appendChild(savedBeersRender(pullBeers, i));
   }
 });
 
@@ -475,7 +475,7 @@ $idCombos.addEventListener('click', function () {
 
   for (var i = 0; i < data.savedCombos.length; i++) {
     var pullCombos = data.savedCombos[i];
-    $savedItemsWindow.appendChild(savedCombosRender(pullCombos));
+    $savedItemsWindow.appendChild(savedCombosRender(pullCombos, i));
   }
 });
 
@@ -483,13 +483,11 @@ $idCombos.addEventListener('click', function () {
 // saved items list
 //
 
-function savedRecipesRender(recipe) {
-
-  var title = document.createElement('h1');
-  title.textContent = 'Recipe';
+function savedRecipesRender(recipe, id) {
 
   var div = document.createElement('div');
   div.setAttribute('class', 'saved-item');
+  div.setAttribute('id', 'recipe-' + id);
 
   var recipeName = document.createElement('h2');
   recipeName.textContent = recipe.name;
@@ -498,10 +496,11 @@ function savedRecipesRender(recipe) {
   return div;
 }
 
-function savedBeersRender(recipe) {
+function savedBeersRender(recipe, id) {
 
   var div = document.createElement('div');
   div.setAttribute('class', 'saved-item');
+  div.setAttribute('id', 'beer-' + id);
 
   var div2 = document.createElement('div');
   div2.setAttribute('class', 'beer-container');
@@ -524,10 +523,11 @@ function savedBeersRender(recipe) {
 
 }
 
-function savedCombosRender(combos) {
+function savedCombosRender(combos, id) {
 
   var div = document.createElement('div');
   div.setAttribute('class', 'saved-items');
+  div.setAttribute('id', 'combo-' + id);
 
   var recipeName = document.createElement('h2');
   recipeName.textContent = combos.foodName;
@@ -559,3 +559,16 @@ function clearChildren() {
     $savedItemsWindow.removeChild($savedItemsWindow.firstChild);
   }
 }
+
+//
+// user can view specific saved items
+//
+
+// window.addEventListener('click', function () {
+//   var getId = event.target.parentElement.id;
+//   var idNumber = getId.split('-');
+//   if (typeof idNumber[1] === 'number') {
+//     console.log(idNumber[1]);
+//   }
+//   console.log(typeof idNumber[]);
+// });
