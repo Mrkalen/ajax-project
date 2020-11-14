@@ -53,10 +53,9 @@ function getBeerData() {
 // });
 // beerApi.send();
 
+//
 // Recipe cycler
-
-var $recipeWindow = document.querySelector('.recipe-window');
-var $comboWindow = document.querySelector('.taco-and-beer-window');
+//
 
 window.addEventListener('load', function () {
   if ($recipeWindow.getAttribute('class') !== 'recipe-window hidden') {
@@ -65,14 +64,15 @@ window.addEventListener('load', function () {
   if ($beerWindow.getAttribute('class') !== 'beer-window hidden') {
     getBeerData();
   }
-  if ($comboWindow.getAttribute('class') !== 'taco-and-beer-window hidden') { getTacoRecipe(); }
-  getBeerData();
+  if ($comboWindow.getAttribute('class') !== 'taco-and-beer-window hidden') {
+    getTacoRecipe();
+    getBeerData();
+  }
 });
 
-var $windowHeader = document.querySelector('.taco-and-beer-window');
+// var $windowHeader = document.querySelector('.window-header');
 
-$windowHeader.addEventListener('click', function () {
-
+window.addEventListener('click', function () {
   var id = event.target.id;
   if (id === 'cycle-recipe' || id === 'cycle-combo-recipe') {
     isLoading = true;
@@ -390,28 +390,75 @@ function storeData() {
   localStorage.setItem('saved-tacos-and-beer', dataJson);
 }
 
+//
+// Navigation
+//
+var $beerView = document.querySelector('.beer-window');
 var $savedWindow = document.querySelector('.saved-window');
 var $savedItemsView = document.querySelector('.saved-items-view');
+var $recipeWindow = document.querySelector('.recipe-window');
+var $comboWindow = document.querySelector('.taco-and-beer-window');
 var $idRecipes = document.querySelector('#recipes');
 var $idBeers = document.querySelector('#beers');
 var $idCombos = document.querySelector('#combos');
+var $saved = document.querySelector('#saved');
+var $comboRandomizer = document.querySelector('#combo-randomizer');
+var $tacoRandomizer = document.querySelector('#taco-randomizer');
+var $beerRandomizer = document.querySelector('#beer-randomizer');
+var $savedItemsWindow = document.querySelector('.saved-items-window');
+var $mainDivs = document.querySelectorAll('main > div');
+
+function viewSwap() {
+  for (var i = 0; i < $mainDivs.length; i++) {
+    if ($mainDivs[i].getAttribute('data-view') === 'view') {
+      $mainDivs[i].setAttribute('data-view', 'hidden');
+    }
+  }
+}
+
+$saved.addEventListener('click', function () {
+  viewSwap();
+  $savedWindow.setAttribute('data-view', 'view');
+});
+
+$comboRandomizer.addEventListener('click', function () {
+  viewSwap();
+  $comboWindow.setAttribute('data-view', 'view');
+});
+
+$tacoRandomizer.addEventListener('click', function () {
+  viewSwap();
+  $recipeWindow.setAttribute('data-view', 'view');
+});
+
+$beerRandomizer.addEventListener('click', function () {
+  viewSwap();
+  $beerView.setAttribute('data-view', 'view');
+});
 
 $idRecipes.addEventListener('click', function () {
-  $savedWindow.setAttribute('class', 'saved-window hidden');
-  $savedItemsView.setAttribute('class', 'saved-items-view');
+  $savedWindow.setAttribute('data-view', 'hidden');
+  $savedItemsView.setAttribute('data-view', 'view');
   var title = document.createElement('h2');
   title.textContent = 'Recipes';
+  clearChildren();
+  $savedItemsView.prepend(title);
 
   for (var i = 0; i < data.savedRecipes.length; i++) {
     var pullRecipes = data.savedRecipes[i];
     $savedItemsWindow.appendChild(savedRecipesRender(pullRecipes));
   }
-  $savedItemsView.appendChild(title);
+
 });
 
 $idBeers.addEventListener('click', function () {
-  $savedWindow.setAttribute('class', 'saved-window hidden');
-  $savedItemsView.setAttribute('class', 'saved-items-view');
+  $savedWindow.setAttribute('data-view', 'hidden');
+  $savedItemsView.setAttribute('data-view', 'view');
+  var title = document.createElement('h2');
+  title.textContent = 'Beers';
+  clearChildren();
+  $savedItemsView.prepend(title);
+
   for (var i = 0; i < data.savedBeers.length; i++) {
     var pullBeers = data.savedBeers[i];
     $savedItemsWindow.appendChild(savedBeersRender(pullBeers));
@@ -419,20 +466,24 @@ $idBeers.addEventListener('click', function () {
 });
 
 $idCombos.addEventListener('click', function () {
-  $savedWindow.setAttribute('class', 'saved-window hidden');
-  $savedItemsView.setAttribute('class', 'saved-items-view');
+  $savedWindow.setAttribute('data-view', 'hidden');
+  $savedItemsView.setAttribute('data-view', 'view');
+  var title = document.createElement('h2');
+  title.textContent = 'Combos';
+  clearChildren();
+  $savedItemsView.prepend(title);
+
   for (var i = 0; i < data.savedCombos.length; i++) {
     var pullCombos = data.savedCombos[i];
     $savedItemsWindow.appendChild(savedCombosRender(pullCombos));
   }
 });
 
+//
 // saved items list
-
-var $savedItemsWindow = document.querySelector('.saved-items-window');
+//
 
 function savedRecipesRender(recipe) {
-  // debugger;
 
   var title = document.createElement('h1');
   title.textContent = 'Recipe';
@@ -500,4 +551,11 @@ function savedCombosRender(combos) {
   div2.appendChild(beerImg);
 
   return div;
+}
+
+function clearChildren() {
+  $savedItemsView.removeChild($savedItemsView.firstChild);
+  while ($savedItemsWindow.firstChild) {
+    $savedItemsWindow.removeChild($savedItemsWindow.firstChild);
+  }
 }

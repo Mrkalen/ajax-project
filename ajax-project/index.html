@@ -19,10 +19,10 @@
     <h1>Crazy Kalens Tacos and Beer</h1>
   </header>
   <main>
-    <div class="home-page hidden">
+    <div class="home-page" data-view="view">
       <img class="hp-image" src="images/Tacos and Beer.jpg" alt="Tacos and Beer">
     </div>
-    <div class="recipe-window hidden">
+    <div class="recipe-window" data-view="hidden">
       <div class="window-header">
 
         <i id="save-recipe" class="far fa-save save"></i>
@@ -35,20 +35,20 @@
       <div id="recipe-window" class="window">
       </div>
     </div>
-    <div class="beer-window hidden">
+    <div class="beer-window" data-view="hidden">
       <div class="window-header">
-        <div id="save-beer">
-          <i class="far fa-save save"></i>
+        <div>
+          <i id="save-beer" class="far fa-save save"></i>
         </div>
         <p>Beer:</p>
-        <div id="cycle-beer">
-          <i class="fas fa-redo-alt"></i>
+        <div>
+          <i id="cycle-beer" class="fas fa-redo-alt"></i>
         </div>
       </div>
       <div id="beer-window" class="window">
       </div>
     </div>
-    <div class="taco-and-beer-window hidden">
+    <div class="taco-and-beer-window" data-view="hidden">
       <div class="window-header">
         <i id="save-combo-beer" class="far fa-save save"></i>
         <p>Beer:</p>
@@ -57,13 +57,9 @@
       <div id="combo-beer-window" class="combo-window beer">
       </div>
       <div class="window-header">
-
         <i id="save-combo-recipe" class="far fa-save save"></i>
-
         <p>Recipe:</p>
-
         <i id="cycle-combo-recipe" class="fas fa-redo-alt"></i>
-
       </div>
       <div id="combo-recipe-window" class="combo-window recipe">
       </div>
@@ -79,7 +75,7 @@
         </div>
       </div>
     </div>
-    <div class="saved-window">
+    <div class="saved-window" data-view="hidden">
       <button id="recipes" type="button">
         <div class="row">
           <p>Recipes</p>
@@ -99,27 +95,27 @@
         </div>
       </button>
     </div>
-    <div class="saved-items-view hidden">
+    <div class="saved-items-view" data-view="hidden">
       <div id="saved-recipes" class="saved-items-window">
       </div>
 
     </div>
   </main>
   <footer>
-    <button class="navigation" type="button">
+    <button id="saved" class="navigation" type="button">
       <i class="far fa-save save"></i>
     </button>
-    <button class="navigation" type="button">
+    <button id="combo-randomizer" class="navigation" type="button">
       <div class="food-beer">
         <i class="fas fa-utensils"></i>
         <i class="fas fa-plus"></i>
         <i class="fas fa-beer"></i>
       </div>
     </button>
-    <button class="navigation" type="button">
+    <button id="taco-randomizer" class="navigation" type="button">
       <i class="fas fa-utensils"></i>
     </button>
-    <button class="navigation" type="button">
+    <button id="beer-randomizer" class="navigation" type="button">
       <i class="fas fa-beer"></i>
     </button>
 
