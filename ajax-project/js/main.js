@@ -42,6 +42,27 @@ function getBeerData() {
 }
 
 //
+// Network notification
+//
+
+function loading(view) {
+  clearView(view);
+  if (beerApi.status !== 200 || tacoApi.status !== 200) {
+
+  }
+}
+
+//
+// clearView
+//
+
+function clearView(view) {
+  while (view.firstChild) {
+    view.removeChild(view.firstChild);
+  }
+}
+
+//
 // Recipe cycler
 //
 
@@ -543,6 +564,10 @@ function savedCombosRender(combos, id) {
 
   return div;
 }
+
+//
+// Clear Children
+//
 
 function clearChildren() {
   $savedItemsView.removeChild($savedItemsView.firstChild);
