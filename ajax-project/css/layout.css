@@ -6,6 +6,10 @@ h1 {
   margin: 0;
 }
 
+h2 {
+  margin: 0;
+}
+
 p {
   margin: 0;
 }
@@ -78,10 +82,6 @@ footer {
   padding: 0 1rem;
 }
 
-.hidden {
-  display: none;
-}
-
 .beer-img {
   width: 50%;
   height: 15rem;
@@ -128,16 +128,82 @@ footer {
   text-align: center;
 }
 
-/* .save-combo {
-  display: flex;
-  flex-direction: column;
-  padding-top: .5rem;
-} */
-
 .combo-footer {
-  padding-top: .5rem;
+  padding-top: 0.5rem;
   display: flex;
   justify-content: space-around;
   flex-direction: row;
   line-height: 1rem;
+}
+
+.row {
+  text-align: center;
+}
+
+.saved-image {
+  width: 75%;
+  height: 9rem;
+  align-self: center;
+  object-fit: cover;
+}
+
+.saved-items-view {
+  text-align: center;
+}
+
+.saved-items-window {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  max-width: 100vw;
+  min-height: 77vh;
+  max-height: 77vh;
+  background-color: white;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  padding: 0 1rem;
+}
+
+.saved-item.beer,
+.saved-item.recipe {
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 0.25rem;
+  text-align: center;
+  max-height: 8rem;
+  min-height: 8rem;
+  align-items: center;
+}
+
+.beer-container .beer-img {
+  height: 5rem;
+  object-fit: contain;
+}
+
+.saved-item.combo {
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 0.25rem;
+  text-align: center;
+  max-height: 8rem;
+  min-height: 8rem;
+  align-items: center;
+  font-size: 0.5rem;
+}
+
+.combo-beer-img {
+  height: 5rem;
+  object-fit: contain;
+}
+
+.recipe {
+  text-align: start;
+}
+
+[data-view="hidden"] {
+  display: none;
 }

@@ -1,6 +1,6 @@
 /* exported data */
-var data = {
-  savedRecipes: [],
-  savedBeers: [],
-  savedCombos: []
-};
+// var data = {
+//   savedRecipes: [],
+//   savedBeers: [],
+//   savedCombos: []
+// };
