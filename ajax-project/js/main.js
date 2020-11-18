@@ -477,7 +477,7 @@ $idCombos.addEventListener('click', function () {
 function savedRecipesRender(recipe, id) {
 
   var div = document.createElement('div');
-  div.setAttribute('class', 'saved-item');
+  div.setAttribute('class', 'saved-item recipe');
   div.setAttribute('id', id);
 
   var recipeName = document.createElement('h2');
@@ -490,7 +490,7 @@ function savedRecipesRender(recipe, id) {
 function savedBeersRender(recipe, id) {
 
   var div = document.createElement('div');
-  div.setAttribute('class', 'saved-item');
+  div.setAttribute('class', 'saved-item beer');
   div.setAttribute('id', id);
 
   var div2 = document.createElement('div');
@@ -517,7 +517,7 @@ function savedBeersRender(recipe, id) {
 function savedCombosRender(combos, id) {
 
   var div = document.createElement('div');
-  div.setAttribute('class', 'saved-item');
+  div.setAttribute('class', 'saved-item combo');
   div.setAttribute('id', id);
 
   var recipeName = document.createElement('h2');
@@ -554,8 +554,6 @@ function clearChildren() {
 //
 // user can view specific saved items
 //
-
-var $savedItemsAll = document.querySelectorAll('div');
 
 $savedItemsWindow.addEventListener('click', function () {
   var closest = event.target.closest('.saved-item');

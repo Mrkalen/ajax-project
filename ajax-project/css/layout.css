@@ -128,12 +128,6 @@ footer {
   text-align: center;
 }
 
-/* .save-combo {
-  display: flex;
-  flex-direction: column;
-  padding-top: .5rem;
-} */
-
 .combo-footer {
   padding-top: 0.5rem;
   display: flex;
@@ -170,7 +164,8 @@ footer {
   padding: 0 1rem;
 }
 
-.saved-item {
+.saved-item.beer,
+.saved-item.recipe {
   display: flex;
   justify-content: center;
   border: 1px solid black;
@@ -187,7 +182,7 @@ footer {
   object-fit: contain;
 }
 
-.saved-items {
+.saved-item.combo {
   display: flex;
   justify-content: space-around;
   border: 1px solid black;
