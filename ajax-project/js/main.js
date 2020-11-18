@@ -10,6 +10,7 @@ var isLoading = false;
 //
 
 var recipe = {};
+var tacoStatus = 0;
 function getTacoRecipe() {
   var tacoApi = new XMLHttpRequest();
   tacoApi.open('GET', 'http://taco-randomizer.herokuapp.com/random/');
@@ -18,7 +19,16 @@ function getTacoRecipe() {
     recipeRender(tacoApi.response);
     comboRecipeRender(tacoApi.response);
     recipe = tacoApi.response;
+    tacoStatus = tacoApi.status;
     isLoading = false;
+  });
+  tacoApi.addEventListener('error', function () {
+    clearView($container);
+    error($container);
+  });
+  tacoApi.addEventListener('loadstart', function () {
+    clearView($container);
+    loading($container);
   });
   tacoApi.send();
 }
@@ -28,6 +38,7 @@ function getTacoRecipe() {
 //
 
 var beer = {};
+var beerStatus = 0;
 function getBeerData() {
   var beerApi = new XMLHttpRequest();
   beerApi.open('GET', 'https://api.punkapi.com/v2/beers/random');
@@ -36,7 +47,16 @@ function getBeerData() {
     beerRender(beerApi.response);
     comboBeerRender(beerApi.response);
     beer = beerApi.response;
+    beerStatus = beerApi.status;
     isLoading = false;
+  });
+  beerApi.addEventListener('error', function () {
+    clearView($container);
+    error($container);
+  });
+  beerApi.addEventListener('loadstart', function () {
+    clearView($container);
+    loading($container);
   });
   beerApi.send();
 }
@@ -45,11 +65,9 @@ function getBeerData() {
 // Network notification
 //
 
-function loading(view) {
+function status(view) {
   clearView(view);
-  if (beerApi.status !== 200 || tacoApi.status !== 200) {
-
-  }
+  loading(view);
 }
 
 //
@@ -63,17 +81,43 @@ function clearView(view) {
 }
 
 //
+// error
+//
+
+function error(view) {
+
+  var errorText = document.createElement('p');
+  errorText.textContent = 'Error 404 file not found';
+  view.appendChild(errorText);
+
+  return errorText;
+}
+
+function loading(view) {
+
+  var loadingText = document.createElement('p');
+  loadingText.textContent = 'loading...';
+  view.appendChild(loadingText);
+
+  return loadingText;
+}
+
+//
 // Recipe cycler
 //
 
 window.addEventListener('load', function () {
   if ($recipeWindow.getAttribute('class') !== 'recipe-window hidden') {
+    status($recipe);
     getTacoRecipe();
   }
   if ($beerWindow.getAttribute('class') !== 'beer-window hidden') {
+    status($beerWindow);
     getBeerData();
   }
   if ($comboWindow.getAttribute('class') !== 'taco-and-beer-window hidden') {
+    status($comboBeer);
+    status($comboRecipe);
     getTacoRecipe();
     getBeerData();
   }
@@ -82,9 +126,14 @@ window.addEventListener('load', function () {
 // var $windowHeader = document.querySelector('.window-header');
 
 window.addEventListener('click', function () {
+  loading($container);
+  getTacoRecipe();
+  getBeerData();
   var id = event.target.id;
   if (id === 'cycle-recipe' || id === 'cycle-combo-recipe') {
     isLoading = true;
+    status($recipe);
+    status($comboRecipe);
     getTacoRecipe();
   } else if (id === 'save-recipe' || id === 'save-combo-recipe') {
     if (isLoading) return;
@@ -92,6 +141,8 @@ window.addEventListener('click', function () {
     storeData();
   } else if (id === 'cycle-beer' || id === 'cycle-combo-beer') {
     isLoading = true;
+    status($beerWindow);
+    status($comboBeer);
     getBeerData();
   } else if (id === 'save-beer' || id === 'save-combo-beer') {
     if (isLoading) return;
@@ -105,6 +156,7 @@ var $saveCombo = document.querySelector('#save-combo');
 
 $saveCombo.addEventListener('click', function () {
   if (isLoading) return;
+
   saveCombo();
   storeData();
 });
@@ -113,6 +165,8 @@ var $cycleCombo = document.querySelector('#cycle-combo');
 
 $cycleCombo.addEventListener('click', function () {
   isLoading = true;
+  status($comboBeer);
+  status($comboRecipe);
   getBeerData();
   getTacoRecipe();
 });
@@ -416,6 +470,7 @@ var $tacoRandomizer = document.querySelector('#taco-randomizer');
 var $beerRandomizer = document.querySelector('#beer-randomizer');
 var $savedItemsWindow = document.querySelector('.saved-items-window');
 var $mainDivs = document.querySelectorAll('main > div');
+var $container = document.querySelector('.container');
 
 function viewSwap() {
   for (var i = 0; i < $mainDivs.length; i++) {
