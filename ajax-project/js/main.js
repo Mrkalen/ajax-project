@@ -5,7 +5,9 @@ var data = {
 };
 
 var isLoading = false;
+//
 // taco API
+//
 
 var recipe = {};
 function getTacoRecipe() {
@@ -20,17 +22,10 @@ function getTacoRecipe() {
   });
   tacoApi.send();
 }
-// var tacoApi = new XMLHttpRequest();
-// tacoApi.open('GET', 'http://taco-randomizer.herokuapp.com/random/');
-// tacoApi.responseType = 'json';
-// tacoApi.addEventListener('load', function () {
-//   var tacoData = tacoApi.response;
-//   var tacoName = tacoData.base_layer.name + ' with ' + tacoData.mixin.name + ' and a ' + tacoData.condiment.name + ' in ' + tacoData.shell.name + '.';
 
-// });
-// tacoApi.send();
-
+//
 // beer API
+//
 
 var beer = {};
 function getBeerData() {
@@ -45,13 +40,6 @@ function getBeerData() {
   });
   beerApi.send();
 }
-
-// var beerApi = new XMLHttpRequest();
-// beerApi.open('GET', 'https://api.punkapi.com/v2/beers/random');
-// beerApi.responseType = 'json';
-// beerApi.addEventListener('load', function () {
-// });
-// beerApi.send();
 
 //
 // Recipe cycler
@@ -439,6 +427,7 @@ $beerRandomizer.addEventListener('click', function () {
 $idRecipes.addEventListener('click', function () {
   $savedWindow.setAttribute('data-view', 'hidden');
   $savedItemsView.setAttribute('data-view', 'view');
+  $savedItemsWindow.setAttribute('id', 'saved-recipes');
   var title = document.createElement('h2');
   title.textContent = 'Recipes';
   clearChildren();
@@ -454,6 +443,7 @@ $idRecipes.addEventListener('click', function () {
 $idBeers.addEventListener('click', function () {
   $savedWindow.setAttribute('data-view', 'hidden');
   $savedItemsView.setAttribute('data-view', 'view');
+  $savedItemsWindow.setAttribute('id', 'saved-beers');
   var title = document.createElement('h2');
   title.textContent = 'Beers';
   clearChildren();
@@ -468,6 +458,7 @@ $idBeers.addEventListener('click', function () {
 $idCombos.addEventListener('click', function () {
   $savedWindow.setAttribute('data-view', 'hidden');
   $savedItemsView.setAttribute('data-view', 'view');
+  $savedItemsWindow.setAttribute('id', 'saved-combos');
   var title = document.createElement('h2');
   title.textContent = 'Combos';
   clearChildren();
@@ -487,7 +478,7 @@ function savedRecipesRender(recipe, id) {
 
   var div = document.createElement('div');
   div.setAttribute('class', 'saved-item');
-  div.setAttribute('id', 'recipe-' + id);
+  div.setAttribute('id', id);
 
   var recipeName = document.createElement('h2');
   recipeName.textContent = recipe.name;
@@ -500,7 +491,7 @@ function savedBeersRender(recipe, id) {
 
   var div = document.createElement('div');
   div.setAttribute('class', 'saved-item');
-  div.setAttribute('id', 'beer-' + id);
+  div.setAttribute('id', id);
 
   var div2 = document.createElement('div');
   div2.setAttribute('class', 'beer-container');
@@ -526,8 +517,8 @@ function savedBeersRender(recipe, id) {
 function savedCombosRender(combos, id) {
 
   var div = document.createElement('div');
-  div.setAttribute('class', 'saved-items');
-  div.setAttribute('id', 'combo-' + id);
+  div.setAttribute('class', 'saved-item');
+  div.setAttribute('id', id);
 
   var recipeName = document.createElement('h2');
   recipeName.textContent = combos.foodName;
@@ -564,11 +555,295 @@ function clearChildren() {
 // user can view specific saved items
 //
 
-// window.addEventListener('click', function () {
-//   var getId = event.target.parentElement.id;
-//   var idNumber = getId.split('-');
-//   if (typeof idNumber[1] === 'number') {
-//     console.log(idNumber[1]);
-//   }
-//   console.log(typeof idNumber[]);
-// });
+var $savedItemsAll = document.querySelectorAll('div');
+
+$savedItemsWindow.addEventListener('click', function () {
+  var closest = event.target.closest('.saved-item');
+  var id = closest.id;
+  var viewRecipe = data.savedRecipes;
+  var viewBeer = data.savedBeers;
+  var viewCombo = data.savedCombos;
+  if ($savedItemsWindow.id === 'saved-recipes') {
+    for (var i = 0; i < data.savedRecipes.length; i++) {
+      if (id === i.toString()) {
+        savedRecipeRender(viewRecipe[i]);
+      }
+    }
+  } else if ($savedItemsWindow.id === 'saved-beers') {
+    for (var j = 0; j < data.savedBeers.length; j++) {
+      if (id === j.toString()) {
+        savedBeerRender(viewBeer[j], $savedItemsWindow);
+      }
+    }
+  } else if ($savedItemsWindow.id === 'saved-combos') {
+    while ($savedItemsWindow.firstChild) {
+      $savedItemsWindow.removeChild($savedItemsWindow.firstChild);
+    }
+    renderComboView();
+    var $viewBeerCombo = document.querySelector('#view-beer-combo');
+    var $viewRecipeCombo = document.querySelector('#view-recipe-combo');
+    for (var k = 0; k < data.savedCombos.length; k++) {
+      if (id === k.toString()) {
+        savedComboRecipeRender(viewCombo[k], $viewRecipeCombo);
+        savedComboBeerRender(viewCombo[k], $viewBeerCombo);
+      }
+    }
+  }
+});
+
+function savedRecipeRender(recipe) {
+  while ($savedItemsWindow.firstChild) {
+    $savedItemsWindow.removeChild($savedItemsWindow.firstChild);
+  }
+  var baseName = recipe.data.base_layer.name;
+  var mixinName = recipe.data.mixin.name;
+  var condimentName = recipe.data.condiment.name;
+  var shellName = recipe.data.shell.name;
+  var tacoName = baseName + ' with ' + mixinName + ' and a ' + condimentName + ' in ' + shellName + '.';
+
+  var recipeName = document.createElement('h2');
+  recipeName.setAttribute('class', 'recipe-header');
+  recipeName.textContent = tacoName;
+  $savedItemsWindow.appendChild(recipeName);
+
+  var baseDiv = document.createElement('div');
+  baseDiv.setAttribute('class', 'recipe');
+  $savedItemsWindow.appendChild(baseDiv);
+
+  var baseTitle = document.createElement('h3');
+  baseTitle.setAttribute('class', 'title');
+  baseTitle.textContent = baseName + ' directions:';
+  baseDiv.appendChild(baseTitle);
+
+  var baseRecipe = document.createElement('p');
+  baseRecipe.setAttribute('class', 'directions');
+  baseRecipe.textContent = recipe.data.base_layer.recipe;
+  baseDiv.appendChild(baseRecipe);
+
+  var mixinDiv = document.createElement('div');
+  mixinDiv.setAttribute('class', 'recipe');
+  $savedItemsWindow.appendChild(mixinDiv);
+
+  var mixinTitle = document.createElement('h3');
+  mixinTitle.setAttribute('class', 'title');
+  mixinTitle.textContent = mixinName + ' directions:';
+  mixinDiv.appendChild(mixinTitle);
+
+  var mixinRecipe = document.createElement('p');
+  mixinRecipe.setAttribute('class', 'directions');
+  mixinRecipe.textContent = recipe.data.mixin.recipe;
+  mixinDiv.appendChild(mixinRecipe);
+
+  var condimentDiv = document.createElement('div');
+  condimentDiv.setAttribute('class', 'recipe');
+  $savedItemsWindow.appendChild(condimentDiv);
+
+  var condimentTitle = document.createElement('h3');
+  condimentTitle.setAttribute('class', 'title');
+  condimentTitle.textContent = condimentName + ' directions:';
+  condimentDiv.appendChild(condimentTitle);
+
+  var condimentRecipe = document.createElement('p');
+  condimentRecipe.setAttribute('class', 'directions');
+  condimentRecipe.textContent = recipe.data.condiment.recipe;
+  condimentDiv.appendChild(condimentRecipe);
+
+  var shellDiv = document.createElement('div');
+  shellDiv.setAttribute('class', 'recipe');
+  $savedItemsWindow.appendChild(shellDiv);
+
+  var shellTitle = document.createElement('h3');
+  shellTitle.setAttribute('class', 'title');
+  shellTitle.textContent = shellName + ' directions:';
+  shellDiv.appendChild(shellTitle);
+
+  var shellRecipe = document.createElement('p');
+  shellRecipe.setAttribute('class', 'directions');
+  shellRecipe.textContent = recipe.data.shell.recipe;
+  shellDiv.appendChild(shellRecipe);
+
+  return recipeName;
+}
+
+function savedBeerRender(beer, view) {
+  while (view.firstChild) {
+    view.removeChild(view.firstChild);
+  }
+
+  var beerName = beer.name;
+  var beerDescription = beer.data[0].description;
+  var beerAbv = beer.data[0].abv;
+  var beerImg = beer.data[0].image_url;
+
+  var drinkName = document.createElement('h2');
+  drinkName.setAttribute('class', 'beer-header');
+  drinkName.textContent = beerName;
+  view.appendChild(drinkName);
+
+  var beerPicture = document.createElement('img');
+  beerPicture.setAttribute('class', 'beer-img');
+  if (beerImg !== null) {
+    beerPicture.setAttribute('src', beerImg);
+  } else {
+
+    beerPicture.setAttribute('src', 'images/404 beer not found.png');
+  }
+  view.appendChild(beerPicture);
+
+  var beerAlcohol = document.createElement('p');
+  beerAlcohol.textContent = 'ABV: ' + beerAbv;
+  view.appendChild(beerAlcohol);
+
+  var beerTalk = document.createElement('p');
+  beerTalk.textContent = 'Description: ' + beerDescription;
+  view.appendChild(beerTalk);
+
+  return drinkName;
+}
+
+function savedComboBeerRender(beer, view) {
+  while (view.firstChild) {
+    view.removeChild(view.firstChild);
+  }
+
+  var beerName = beer.drinName;
+  var beerDescription = beer.drinkData[0].description;
+  var beerAbv = beer.drinkData[0].abv;
+  var beerImg = beer.drinkData[0].image_url;
+
+  var beerDiv1 = document.createElement('div');
+  beerDiv1.setAttribute('class', 'beer-combo-row');
+  view.appendChild(beerDiv1);
+
+  var drinkName = document.createElement('h2');
+  drinkName.setAttribute('class', 'beer-header');
+  drinkName.textContent = beerName;
+  beerDiv1.appendChild(drinkName);
+
+  var beerPicture = document.createElement('img');
+  beerPicture.setAttribute('class', 'beer-img');
+  if (beerImg !== null) {
+    beerPicture.setAttribute('src', beerImg);
+  } else {
+
+    beerPicture.setAttribute('src', 'images/404 beer not found.png');
+  }
+  beerDiv1.appendChild(beerPicture);
+
+  var beerDiv2 = document.createElement('div');
+  beerDiv2.setAttribute('class', 'beer-combo-row');
+  view.appendChild(beerDiv2);
+
+  var beerAlcohol = document.createElement('p');
+  beerAlcohol.textContent = 'ABV: ' + beerAbv;
+  beerDiv2.appendChild(beerAlcohol);
+
+  var beerTalk = document.createElement('p');
+  beerTalk.textContent = 'Description: ' + beerDescription;
+  beerDiv2.appendChild(beerTalk);
+
+  return drinkName;
+}
+
+function savedComboRecipeRender(recipe, view) {
+  while (view.firstChild) {
+    view.removeChild(view.firstChild);
+  }
+  var baseName = recipe.foodData.base_layer.name;
+  var mixinName = recipe.foodData.mixin.name;
+  var condimentName = recipe.foodData.condiment.name;
+  var shellName = recipe.foodData.shell.name;
+  var tacoName = baseName + ' with ' + mixinName + ' and a ' + condimentName + ' in ' + shellName + '.';
+
+  var recipeName = document.createElement('h2');
+  recipeName.setAttribute('class', 'recipe-header');
+  recipeName.textContent = tacoName;
+  view.appendChild(recipeName);
+
+  var baseDiv = document.createElement('div');
+  baseDiv.setAttribute('class', 'recipe');
+  view.appendChild(baseDiv);
+
+  var baseTitle = document.createElement('h3');
+  baseTitle.setAttribute('class', 'title');
+  baseTitle.textContent = baseName + ' directions:';
+  baseDiv.appendChild(baseTitle);
+
+  var baseRecipe = document.createElement('p');
+  baseRecipe.setAttribute('class', 'directions');
+  baseRecipe.textContent = recipe.foodData.base_layer.recipe;
+  baseDiv.appendChild(baseRecipe);
+
+  var mixinDiv = document.createElement('div');
+  mixinDiv.setAttribute('class', 'recipe');
+  view.appendChild(mixinDiv);
+
+  var mixinTitle = document.createElement('h3');
+  mixinTitle.setAttribute('class', 'title');
+  mixinTitle.textContent = mixinName + ' directions:';
+  mixinDiv.appendChild(mixinTitle);
+
+  var mixinRecipe = document.createElement('p');
+  mixinRecipe.setAttribute('class', 'directions');
+  mixinRecipe.textContent = recipe.foodData.mixin.recipe;
+  mixinDiv.appendChild(mixinRecipe);
+
+  var condimentDiv = document.createElement('div');
+  condimentDiv.setAttribute('class', 'recipe');
+  view.appendChild(condimentDiv);
+
+  var condimentTitle = document.createElement('h3');
+  condimentTitle.setAttribute('class', 'title');
+  condimentTitle.textContent = condimentName + ' directions:';
+  condimentDiv.appendChild(condimentTitle);
+
+  var condimentRecipe = document.createElement('p');
+  condimentRecipe.setAttribute('class', 'directions');
+  condimentRecipe.textContent = recipe.foodData.condiment.recipe;
+  condimentDiv.appendChild(condimentRecipe);
+
+  var shellDiv = document.createElement('div');
+  shellDiv.setAttribute('class', 'recipe');
+  view.appendChild(shellDiv);
+
+  var shellTitle = document.createElement('h3');
+  shellTitle.setAttribute('class', 'title');
+  shellTitle.textContent = shellName + ' directions:';
+  shellDiv.appendChild(shellTitle);
+
+  var shellRecipe = document.createElement('p');
+  shellRecipe.setAttribute('class', 'directions');
+  shellRecipe.textContent = recipe.foodData.shell.recipe;
+  shellDiv.appendChild(shellRecipe);
+
+  return recipeName;
+}
+
+function renderComboView() {
+
+  var headerDiv1 = document.createElement('div');
+  headerDiv1.setAttribute('class', 'window-header');
+  $savedItemsWindow.appendChild(headerDiv1);
+
+  var title = document.createElement('p');
+  title.textContent = 'Beer:';
+  headerDiv1.appendChild(title);
+
+  var beerDiv = document.createElement('div');
+  beerDiv.setAttribute('id', 'view-beer-combo');
+  $savedItemsWindow.appendChild(beerDiv);
+
+  var headerDiv2 = document.createElement('div');
+  headerDiv2.setAttribute('class', 'window-header');
+  $savedItemsWindow.appendChild(headerDiv2);
+
+  var title2 = document.createElement('p');
+  title2.textContent = 'Recipe:';
+  headerDiv2.appendChild(title2);
+
+  var recipeDiv = document.createElement('div');
+  recipeDiv.setAttribute('id', 'view-recipe-combo');
+  $savedItemsWindow.appendChild(recipeDiv);
+
+  return beerDiv;
+}

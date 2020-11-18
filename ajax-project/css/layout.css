@@ -205,6 +205,10 @@ footer {
   object-fit: contain;
 }
 
+.recipe {
+  text-align: start;
+}
+
 [data-view="hidden"] {
   display: none;
 }
