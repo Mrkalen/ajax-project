@@ -301,6 +301,57 @@ footer {
   }
 }
 
+/* Ipad Portrait */
+
+@media screen and (min-width: 750px) {
+  .saved-window {
+    flex-direction: column;
+    height: 90vh;
+  }
+
+  .saved-window button {
+    height: calc(100% / 3);
+  }
+
+  .window {
+    max-height: 80vh;
+    min-height: 80vh;
+  }
+
+  .beer-window .window {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .beer-header {
+    font-size: 2rem;
+  }
+
+  .combo-window.beer {
+    min-height: 20rem;
+    max-height: 20rem;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .beer-combo-row {
+    width: 50%;
+  }
+
+  .beer-combo-row h2 {
+    font-size: 2rem;
+  }
+
+  .combo-window.recipe {
+    min-height: 28rem;
+    max-height: 28rem;
+  }
+
+  .taco-and-beer-window {
+    margin-bottom: 4rem;
+  }
+}
+
 [data-view="hidden"] {
   display: none;
 }
