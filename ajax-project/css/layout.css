@@ -228,7 +228,7 @@ footer {
 
 /* iphone 6/7/8 landscape */
 
-@media screen and (min-width: 650px) {
+@media screen and (min-width: 667px) {
   .window {
     max-height: 60vh;
     min-height: 60vh;
@@ -255,7 +255,7 @@ footer {
   }
 
   .beer-window .window {
-    flex-direction: row;
+    text-align: center;
   }
 
   .beer-img {
@@ -267,11 +267,13 @@ footer {
   }
 
   .combo-window.beer {
-    display: block;
+    flex-direction: row;
   }
 
   .beer-combo-row {
+    width: 50%;
     flex-direction: column;
+    justify-content: end;
   }
 
   .beer-header {
@@ -279,33 +281,11 @@ footer {
   }
 }
 
-/* iphone x portrait */
-
-@media screen and (max-width: 380px) {
-  .saved-window {
-    min-height: 85vh;
-    max-height: 85vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
-
-  .combo-window.beer {
-    max-height: 15rem;
-    min-height: 15rem;
-  }
-
-  .combo-window.recipe {
-    min-height: 20rem;
-    max-height: 20rem;
-  }
-}
-
 /* Ipad Portrait */
 
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 768px) {
   .saved-window {
-    flex-direction: column;
+    align-items: center;
     height: 90vh;
   }
 
