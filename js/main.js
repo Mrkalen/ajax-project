@@ -1,3 +1,4 @@
+/* eslint-disable no-global-assign */
 var data = {
   savedRecipes: [],
   savedBeers: [],
