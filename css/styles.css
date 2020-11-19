@@ -34,6 +34,7 @@ button {
 
 .window {
   border-radius: 5px;
+  background-color: white;
 }
 
 .recipe-buttons {
@@ -58,10 +59,30 @@ p.directions {
 
 .combo-window {
   border-radius: 5px;
+  background-color: white;
 }
 
 .saved-items-window {
   border-radius: 5px;
+}
+
+.saved-item.beer,
+.saved-item.recipe {
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.saved-item.combo {
+  border: 1px solid black;
+  font-size: 0.5rem;
+}
+
+.error-container {
+  background-color: rgba(83, 83, 83, 0.25);
+}
+
+.error {
+  background-color: gray;
 }
 
 .modal {
