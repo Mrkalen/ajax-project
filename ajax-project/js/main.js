@@ -14,11 +14,18 @@ function getTacoRecipe() {
   var tacoApi = new XMLHttpRequest();
   tacoApi.open('GET', 'http://taco-randomizer.herokuapp.com/random/');
   tacoApi.responseType = 'json';
+  tacoApi.addEventListener('loadstart', function () {
+    status($recipe);
+    status($comboRecipe);
+  });
   tacoApi.addEventListener('load', function () {
     recipeRender(tacoApi.response);
     comboRecipeRender(tacoApi.response);
     recipe = tacoApi.response;
     isLoading = false;
+  });
+  tacoApi.addEventListener('error', function () {
+    error($container);
   });
   tacoApi.send();
 }
@@ -32,11 +39,18 @@ function getBeerData() {
   var beerApi = new XMLHttpRequest();
   beerApi.open('GET', 'https://api.punkapi.com/v2/beers/random');
   beerApi.responseType = 'json';
+  beerApi.addEventListener('loadstart', function () {
+    status($beerWindow);
+    status($comboBeer);
+  });
   beerApi.addEventListener('load', function () {
     beerRender(beerApi.response);
     comboBeerRender(beerApi.response);
     beer = beerApi.response;
     isLoading = false;
+  });
+  beerApi.addEventListener('error', function () {
+    error($container);
   });
   beerApi.send();
 }
@@ -45,11 +59,9 @@ function getBeerData() {
 // Network notification
 //
 
-function loading(view) {
+function status(view) {
   clearView(view);
-  if (beerApi.status !== 200 || tacoApi.status !== 200) {
-
-  }
+  loading(view);
 }
 
 //
@@ -60,6 +72,54 @@ function clearView(view) {
   while (view.firstChild) {
     view.removeChild(view.firstChild);
   }
+}
+
+//
+// error
+//
+
+function error(view) {
+
+  var errorContainer = document.createElement('div');
+  errorContainer.setAttribute('class', 'error-container');
+  view.appendChild(errorContainer);
+
+  var errorDiv = document.createElement('div');
+  errorDiv.setAttribute('class', 'error');
+  errorContainer.appendChild(errorDiv);
+
+  var errorText = document.createElement('p');
+  errorText.textContent = 'Error 404 file not found';
+  errorDiv.appendChild(errorText);
+
+  var errorButton = document.createElement('button');
+  errorButton.setAttribute('type', 'button');
+  errorButton.setAttribute('class', 'error-button');
+  errorButton.textContent = 'Close';
+  errorDiv.appendChild(errorButton);
+
+  return errorText;
+}
+
+//
+// Clear Error
+//
+
+function clearError(eventTarget) {
+  eventTarget.remove();
+}
+
+//
+// loading
+//
+
+function loading(view) {
+
+  var loadingText = document.createElement('p');
+  loadingText.textContent = 'loading...';
+  view.appendChild(loadingText);
+
+  return loadingText;
 }
 
 //
@@ -83,8 +143,11 @@ window.addEventListener('load', function () {
 
 window.addEventListener('click', function () {
   var id = event.target.id;
-  if (id === 'cycle-recipe' || id === 'cycle-combo-recipe') {
+  if (event.target.className === 'error-button') {
+    clearError(event.target.closest('.error-container'));
+  } else if (id === 'cycle-recipe' || id === 'cycle-combo-recipe') {
     isLoading = true;
+    // status($recipe);
     getTacoRecipe();
   } else if (id === 'save-recipe' || id === 'save-combo-recipe') {
     if (isLoading) return;
@@ -92,6 +155,7 @@ window.addEventListener('click', function () {
     storeData();
   } else if (id === 'cycle-beer' || id === 'cycle-combo-beer') {
     isLoading = true;
+    // status($beerWindow);
     getBeerData();
   } else if (id === 'save-beer' || id === 'save-combo-beer') {
     if (isLoading) return;
@@ -105,6 +169,7 @@ var $saveCombo = document.querySelector('#save-combo');
 
 $saveCombo.addEventListener('click', function () {
   if (isLoading) return;
+
   saveCombo();
   storeData();
 });
@@ -113,6 +178,7 @@ var $cycleCombo = document.querySelector('#cycle-combo');
 
 $cycleCombo.addEventListener('click', function () {
   isLoading = true;
+
   getBeerData();
   getTacoRecipe();
 });
@@ -416,6 +482,7 @@ var $tacoRandomizer = document.querySelector('#taco-randomizer');
 var $beerRandomizer = document.querySelector('#beer-randomizer');
 var $savedItemsWindow = document.querySelector('.saved-items-window');
 var $mainDivs = document.querySelectorAll('main > div');
+var $container = document.querySelector('.container');
 
 function viewSwap() {
   for (var i = 0; i < $mainDivs.length; i++) {

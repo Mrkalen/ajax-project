@@ -204,6 +204,103 @@ footer {
   text-align: start;
 }
 
+.error-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(83, 83, 83, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error {
+  width: 15rem;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  background-color: gray;
+  justify-content: center;
+  align-items: center;
+}
+
+/* iphone 6/7/8 landscape */
+
+@media screen and (min-width: 650px) {
+  .window {
+    max-height: 60vh;
+    min-height: 60vh;
+  }
+
+  .taco-and-beer-window {
+    margin-bottom: 5rem;
+  }
+
+  .saved-window {
+    display: flex;
+    height: 75vh;
+  }
+
+  .saved-items-window {
+    min-height: 60vh;
+    max-height: 60vh;
+  }
+
+  .home-page {
+    max-height: 12rem;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .beer-window .window {
+    flex-direction: row;
+  }
+
+  .beer-img {
+    height: 12rem;
+  }
+
+  .beer .beer-image {
+    height: 8rem;
+  }
+
+  .combo-window.beer {
+    display: block;
+  }
+
+  .beer-combo-row {
+    flex-direction: column;
+  }
+
+  .beer-header {
+    font-size: 0.75rem;
+  }
+}
+
+/* iphone x portrait */
+
+@media screen and (max-width: 380px) {
+  .saved-window {
+    min-height: 85vh;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .combo-window.beer {
+    max-height: 15rem;
+    min-height: 15rem;
+  }
+
+  .combo-window.recipe {
+    min-height: 20rem;
+    max-height: 20rem;
+  }
+}
+
 [data-view="hidden"] {
   display: none;
 }
