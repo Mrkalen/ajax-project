@@ -13,7 +13,7 @@ var isLoading = false;
 var recipe = {};
 function getTacoRecipe() {
   var tacoApi = new XMLHttpRequest();
-  tacoApi.open('GET', 'http://taco-randomizer.herokuapp.com/random/');
+  tacoApi.open('GET', 'https://taco-randomizer.herokuapp.com/random/');
   tacoApi.responseType = 'json';
   tacoApi.addEventListener('loadstart', function () {
     status($recipe);
