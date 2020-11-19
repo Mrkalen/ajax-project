@@ -52,7 +52,7 @@ button {
 }
 
 p.directions {
-  font-size: .75rem;
+  font-size: 0.75rem;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -62,4 +62,8 @@ p.directions {
 
 .saved-items-window {
   border-radius: 5px;
+}
+
+.modal {
+  background-color: rgba(128, 128, 128, 0.75);
 }

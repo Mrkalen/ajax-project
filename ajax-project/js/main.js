@@ -10,25 +10,22 @@ var isLoading = false;
 //
 
 var recipe = {};
-var tacoStatus = 0;
 function getTacoRecipe() {
   var tacoApi = new XMLHttpRequest();
   tacoApi.open('GET', 'http://taco-randomizer.herokuapp.com/random/');
   tacoApi.responseType = 'json';
+  tacoApi.addEventListener('loadstart', function () {
+    status($recipe);
+    status($comboRecipe);
+  });
   tacoApi.addEventListener('load', function () {
     recipeRender(tacoApi.response);
     comboRecipeRender(tacoApi.response);
     recipe = tacoApi.response;
-    tacoStatus = tacoApi.status;
     isLoading = false;
   });
   tacoApi.addEventListener('error', function () {
-    clearView($container);
     error($container);
-  });
-  tacoApi.addEventListener('loadstart', function () {
-    clearView($container);
-    loading($container);
   });
   tacoApi.send();
 }
@@ -38,25 +35,22 @@ function getTacoRecipe() {
 //
 
 var beer = {};
-var beerStatus = 0;
 function getBeerData() {
   var beerApi = new XMLHttpRequest();
   beerApi.open('GET', 'https://api.punkapi.com/v2/beers/random');
   beerApi.responseType = 'json';
+  beerApi.addEventListener('loadstart', function () {
+    status($beerWindow);
+    status($comboBeer);
+  });
   beerApi.addEventListener('load', function () {
     beerRender(beerApi.response);
     comboBeerRender(beerApi.response);
     beer = beerApi.response;
-    beerStatus = beerApi.status;
     isLoading = false;
   });
   beerApi.addEventListener('error', function () {
-    clearView($container);
     error($container);
-  });
-  beerApi.addEventListener('loadstart', function () {
-    clearView($container);
-    loading($container);
   });
   beerApi.send();
 }
@@ -86,12 +80,38 @@ function clearView(view) {
 
 function error(view) {
 
+  var errorContainer = document.createElement('div');
+  errorContainer.setAttribute('class', 'error-container');
+  view.appendChild(errorContainer);
+
+  var errorDiv = document.createElement('div');
+  errorDiv.setAttribute('class', 'error');
+  errorContainer.appendChild(errorDiv);
+
   var errorText = document.createElement('p');
   errorText.textContent = 'Error 404 file not found';
-  view.appendChild(errorText);
+  errorDiv.appendChild(errorText);
+
+  var errorButton = document.createElement('button');
+  errorButton.setAttribute('type', 'button');
+  errorButton.setAttribute('class', 'error-button');
+  errorButton.textContent = 'Close';
+  errorDiv.appendChild(errorButton);
 
   return errorText;
 }
+
+//
+// Clear Error
+//
+
+function clearError(eventTarget) {
+  eventTarget.remove();
+}
+
+//
+// loading
+//
 
 function loading(view) {
 
@@ -108,16 +128,12 @@ function loading(view) {
 
 window.addEventListener('load', function () {
   if ($recipeWindow.getAttribute('class') !== 'recipe-window hidden') {
-    status($recipe);
     getTacoRecipe();
   }
   if ($beerWindow.getAttribute('class') !== 'beer-window hidden') {
-    status($beerWindow);
     getBeerData();
   }
   if ($comboWindow.getAttribute('class') !== 'taco-and-beer-window hidden') {
-    status($comboBeer);
-    status($comboRecipe);
     getTacoRecipe();
     getBeerData();
   }
@@ -126,14 +142,12 @@ window.addEventListener('load', function () {
 // var $windowHeader = document.querySelector('.window-header');
 
 window.addEventListener('click', function () {
-  loading($container);
-  getTacoRecipe();
-  getBeerData();
   var id = event.target.id;
-  if (id === 'cycle-recipe' || id === 'cycle-combo-recipe') {
+  if (event.target.className === 'error-button') {
+    clearError(event.target.closest('.error-container'));
+  } else if (id === 'cycle-recipe' || id === 'cycle-combo-recipe') {
     isLoading = true;
-    status($recipe);
-    status($comboRecipe);
+    // status($recipe);
     getTacoRecipe();
   } else if (id === 'save-recipe' || id === 'save-combo-recipe') {
     if (isLoading) return;
@@ -141,8 +155,7 @@ window.addEventListener('click', function () {
     storeData();
   } else if (id === 'cycle-beer' || id === 'cycle-combo-beer') {
     isLoading = true;
-    status($beerWindow);
-    status($comboBeer);
+    // status($beerWindow);
     getBeerData();
   } else if (id === 'save-beer' || id === 'save-combo-beer') {
     if (isLoading) return;
@@ -165,8 +178,7 @@ var $cycleCombo = document.querySelector('#cycle-combo');
 
 $cycleCombo.addEventListener('click', function () {
   isLoading = true;
-  status($comboBeer);
-  status($comboRecipe);
+
   getBeerData();
   getTacoRecipe();
 });
