@@ -76,7 +76,6 @@ footer {
   max-width: 100vw;
   min-height: 77vh;
   max-height: 77vh;
-  background-color: white;
   margin-right: 1rem;
   margin-left: 1rem;
   padding: 0 1rem;
@@ -96,7 +95,6 @@ footer {
   max-width: 100vw;
   min-height: 12rem;
   max-height: 12rem;
-  background-color: white;
   margin-right: 1rem;
   margin-left: 1rem;
   padding: 0 1rem;
@@ -158,7 +156,6 @@ footer {
   max-width: 100vw;
   min-height: 77vh;
   max-height: 77vh;
-  background-color: white;
   margin-right: 1rem;
   margin-left: 1rem;
   padding: 0 1rem;
@@ -168,8 +165,6 @@ footer {
 .saved-item.recipe {
   display: flex;
   justify-content: center;
-  border: 1px solid black;
-  border-radius: 5px;
   margin: 0.25rem;
   text-align: center;
   max-height: 8rem;
@@ -185,14 +180,12 @@ footer {
 .saved-item.combo {
   display: flex;
   justify-content: space-around;
-  border: 1px solid black;
   border-radius: 5px;
   margin: 0.25rem;
   text-align: center;
   max-height: 8rem;
   min-height: 8rem;
   align-items: center;
-  font-size: 0.5rem;
 }
 
 .combo-beer-img {
@@ -210,7 +203,6 @@ footer {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(83, 83, 83, 0.25);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -221,7 +213,6 @@ footer {
   height: 10rem;
   display: flex;
   flex-direction: column;
-  background-color: gray;
   justify-content: center;
   align-items: center;
 }

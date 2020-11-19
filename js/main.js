@@ -5,7 +5,12 @@ var data = {
   savedCombos: []
 };
 
+//
+// Load before save indicator
+//
+
 var isLoading = false;
+
 //
 // taco API
 //
@@ -66,7 +71,7 @@ function status(view) {
 }
 
 //
-// clearView
+// clear view
 //
 
 function clearView(view) {
@@ -124,7 +129,7 @@ function loading(view) {
 }
 
 //
-// Recipe cycler
+// Preload info
 //
 
 window.addEventListener('load', function () {
@@ -140,7 +145,9 @@ window.addEventListener('load', function () {
   }
 });
 
-// var $windowHeader = document.querySelector('.window-header');
+//
+// Recipe/beer cycle/save
+//
 
 window.addEventListener('click', function () {
   var id = event.target.id;
@@ -184,7 +191,9 @@ $cycleCombo.addEventListener('click', function () {
   getTacoRecipe();
 });
 
+//
 // Recipe Render
+//
 
 var $recipe = document.querySelector('#recipe-window');
 
@@ -262,7 +271,9 @@ function recipeRender(recipe) {
   return recipeName;
 }
 
+//
 // save taco data
+//
 
 function saveTaco() {
   var tacoName = recipe.base_layer.name;
@@ -270,7 +281,9 @@ function saveTaco() {
   data.savedRecipes.push({ name: tacoName, data: tacoData });
 }
 
+//
 // Beer Render
+//
 
 var $beerWindow = document.querySelector('#beer-window');
 
@@ -310,7 +323,9 @@ function beerRender(beer) {
   return drinkName;
 }
 
+//
 // Save Beer
+//
 
 function saveBeer() {
   var beerName = beer[0].name;
@@ -318,7 +333,9 @@ function saveBeer() {
   data.savedBeers.push({ name: beerName, data: beerData });
 }
 
+//
 // combo recipe render
+//
 
 var $comboRecipe = document.querySelector('#combo-recipe-window');
 
@@ -396,7 +413,9 @@ function comboRecipeRender(recipe) {
   return recipeName;
 }
 
+//
 // combo beer render
+//
 
 var $comboBeer = document.querySelector('#combo-beer-window');
 
@@ -444,7 +463,9 @@ function comboBeerRender(beer) {
   return drinkName;
 }
 
+//
 // save combo data
+//
 
 function saveCombo() {
   var beerName = beer[0].name;
@@ -454,7 +475,9 @@ function saveCombo() {
   data.savedCombos.push({ drinkName: beerName, drinkData: beerData, foodName: tacoName, foodData: tacoData });
 }
 
+//
 // Local Storage
+//
 
 var savedData = localStorage.getItem('saved-tacos-and-beer');
 if (savedData !== null) {
