@@ -198,6 +198,7 @@ $cycleCombo.addEventListener('click', function () {
 var $recipe = document.querySelector('#recipe-window');
 
 function recipeRender(recipe) {
+
   while ($recipe.firstChild) {
     $recipe.removeChild($recipe.firstChild);
   }
@@ -288,6 +289,10 @@ function saveTaco() {
 var $beerWindow = document.querySelector('#beer-window');
 
 function beerRender(beer) {
+
+  if (data.savedBeers[0] === undefined) {
+    noSavedItems($beerWindow);
+  }
   while ($beerWindow.firstChild) {
     $beerWindow.removeChild($beerWindow.firstChild);
   }
@@ -545,6 +550,10 @@ $idRecipes.addEventListener('click', function () {
   clearChildren();
   $savedItemsView.prepend(title);
 
+  if (data.savedRecipes[0] === undefined) {
+    noSavedItems($savedItemsWindow);
+  }
+
   for (var i = 0; i < data.savedRecipes.length; i++) {
     var pullRecipes = data.savedRecipes[i];
     $savedItemsWindow.appendChild(savedRecipesRender(pullRecipes, i));
@@ -561,6 +570,10 @@ $idBeers.addEventListener('click', function () {
   clearChildren();
   $savedItemsView.prepend(title);
 
+  if (data.savedBeers[0] === undefined) {
+    noSavedItems($savedItemsWindow);
+  }
+
   for (var i = 0; i < data.savedBeers.length; i++) {
     var pullBeers = data.savedBeers[i];
     $savedItemsWindow.appendChild(savedBeersRender(pullBeers, i));
@@ -575,6 +588,10 @@ $idCombos.addEventListener('click', function () {
   title.textContent = 'Combos';
   clearChildren();
   $savedItemsView.prepend(title);
+
+  if (data.savedCombos[0] === undefined) {
+    noSavedItems($savedItemsWindow);
+  }
 
   for (var i = 0; i < data.savedCombos.length; i++) {
     var pullCombos = data.savedCombos[i];
@@ -706,6 +723,7 @@ $savedItemsWindow.addEventListener('click', function () {
 });
 
 function savedRecipeRender(recipe) {
+
   while ($savedItemsWindow.firstChild) {
     $savedItemsWindow.removeChild($savedItemsWindow.firstChild);
   }
@@ -960,4 +978,13 @@ function renderComboView() {
   $savedItemsWindow.appendChild(recipeDiv);
 
   return beerDiv;
+}
+
+function noSavedItems(view) {
+
+  var noSavedItems = document.createElement('p');
+  noSavedItems.textContent = 'No Saved Items';
+  view.appendChild(noSavedItems);
+
+  return noSavedItems;
 }

@@ -276,7 +276,7 @@ footer {
 
 /* Ipad Portrait */
 
-@media screen and (width: 768px) {
+@media screen and (min-width: 768px) {
   i {
     font-size: 1.5rem;
   }
@@ -363,6 +363,24 @@ footer {
   .combo-window.beer {
     max-height: 10rem;
     min-height: 10rem;
+  }
+}
+
+/* Monitor */
+
+@media screen and (min-width: 1024px) {
+  .home-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hp-image {
+    width: 50%;
+  }
+
+  .saved-window {
+    display: flex;
   }
 }
 
