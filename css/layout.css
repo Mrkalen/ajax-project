@@ -265,6 +265,15 @@ footer {
   }
 }
 
+/* Iphone x landscape */
+
+@media screen and (min-width: 811px) {
+  .window {
+    max-height: 60vh;
+    min-height: 60vh;
+  }
+}
+
 /* Ipad Portrait */
 
 @media screen and (min-width: 768px) {
@@ -327,6 +336,33 @@ footer {
 
   .taco-and-beer-window {
     margin-bottom: 4rem;
+  }
+}
+
+/* Iphone 5/SE */
+
+@media screen and (min-width: 319px) {
+  h1 {
+    font-size: 1rem;
+  }
+
+  .navigation .food-beer {
+    font-size: 1.5rem;
+  }
+
+  .window {
+    max-height: 70vh;
+    min-height: 70vh;
+  }
+
+  .combo-window.recipe {
+    max-height: 10rem;
+    min-height: 10rem;
+  }
+
+  .combo-window.beer {
+    max-height: 10rem;
+    min-height: 10rem;
   }
 }
 
