@@ -13,15 +13,16 @@ button {
   font-family: 'Gloria Hallelujah', cursive;
   background-color: rgba(0, 0, 0, 0);
   border: none;
+  cursor: pointer;
+}
+
+i {
+  cursor: pointer;
 }
 
 .navigation {
   background-color: #c5ac55;
   border-style: none;
-}
-
-.navigation:focus {
-  background-color: khaki;
 }
 
 .redo {
@@ -70,11 +71,17 @@ p.directions {
 .saved-item.recipe {
   border: 1px solid black;
   border-radius: 5px;
+  background-color: white;
 }
 
 .saved-item.combo {
   border: 1px solid black;
   font-size: 0.5rem;
+  background-color: white;
+}
+
+.combo-footer div {
+  cursor: pointer;
 }
 
 .error-container {
