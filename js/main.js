@@ -121,8 +121,8 @@ function clearError(eventTarget) {
 
 function loading(view) {
 
-  var loadingText = document.createElement('p');
-  loadingText.textContent = 'loading...';
+  var loadingText = document.createElement('img');
+  loadingText.setAttribute('src', 'images/Bars-1s-200px.svg');
   view.appendChild(loadingText);
 
   return loadingText;
