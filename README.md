@@ -4,7 +4,7 @@ An app to find random taco recipes as well as some beer to go along with them.
 
 ## Live Link
 
-https://mrkalen.github.io/ajax-project/
+https://mrkalen.github.io/taco-and-beer-generator/
 
 ## Feature List
 
