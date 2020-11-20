@@ -218,7 +218,7 @@ footer {
 
 /* iphone 6/7/8 landscape */
 
-@media screen and (min-width: 667px) {
+@media screen and (width: 667px) {
   .window {
     max-height: 60vh;
     min-height: 60vh;
@@ -267,7 +267,7 @@ footer {
 
 /* Iphone x landscape */
 
-@media screen and (min-width: 811px) {
+@media screen and (width: 812px) {
   .window {
     max-height: 60vh;
     min-height: 60vh;
@@ -276,7 +276,7 @@ footer {
 
 /* Ipad Portrait */
 
-@media screen and (min-width: 768px) {
+@media screen and (width: 768px) {
   i {
     font-size: 1.5rem;
   }
@@ -341,7 +341,7 @@ footer {
 
 /* Iphone 5/SE */
 
-@media screen and (min-width: 319px) {
+@media screen and (width: 320px) {
   h1 {
     font-size: 1rem;
   }
