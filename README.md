@@ -18,6 +18,9 @@ https://mrkalen.github.io/taco-and-beer-generator/
 8. User can view saved beers.
 9. User can view saved Combos.
 
+# Images
+![alt text](https://user-images.githubusercontent.com/70028619/104510473-19bee000-55a0-11eb-98a9-248572454ecb.png)
+
 ## Future Features
 
 1. User can delete saved items.
