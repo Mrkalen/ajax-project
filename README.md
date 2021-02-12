@@ -4,7 +4,7 @@ An app to find random taco recipes as well as some beer to go along with them.
 
 ## Live Link
 
-https://mrkalen.github.io/ajax-project/
+https://mrkalen.github.io/taco-and-beer-generator/
 
 ## Feature List
 
@@ -17,6 +17,9 @@ https://mrkalen.github.io/ajax-project/
 7. User can view saved recipes.
 8. User can view saved beers.
 9. User can view saved Combos.
+
+# Images
+![alt text](https://user-images.githubusercontent.com/70028619/104510473-19bee000-55a0-11eb-98a9-248572454ecb.png)
 
 ## Future Features
 
