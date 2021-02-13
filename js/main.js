@@ -690,10 +690,14 @@ function clearChildren() {
 
 $savedItemsWindow.addEventListener('click', function () {
   var closest = event.target.closest('.saved-item');
-  var id = closest.id;
   var viewRecipe = data.savedRecipes;
   var viewBeer = data.savedBeers;
   var viewCombo = data.savedCombos;
+  if (closest) {
+    var id = closest.id;
+  } else {
+    return;
+  }
   if ($savedItemsWindow.id === 'saved-recipes') {
     for (var i = 0; i < data.savedRecipes.length; i++) {
       if (id === i.toString()) {
